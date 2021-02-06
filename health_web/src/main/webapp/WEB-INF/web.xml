@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+<welcome-file-list>
+	<welcome-file>pages/checkitem.html</welcome-file>
+</welcome-file-list>
+	
+	<filter>
+			<!--编码过滤器-->
+			<filter-name>characterEncodingFilter</filter-name>
+			<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+			<init-param>
+				<!--使用的编码-->
+				<param-name>encoding</param-name>
+				<param-value>utf-8</param-value>
+			</init-param>
+		</filter>
+		<filter-mapping>
+			<filter-name>characterEncodingFilter</filter-name>
+			<url-pattern>/*</url-pattern>
+		</filter-mapping>
+
+	<!-- 核心控制器	-->
+		<servlet>
+			<servlet-name>dispatcherServlet</servlet-name>
+			<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+			<init-param>
+				<!--初始化 创建spring容器-->
+				<param-name>contextConfigLocation</param-name>
+				<param-value>classpath:StringMVC.xml</param-value>
+			</init-param>
+		<!-- 启动时创建	-->
+			<load-on-startup>1</load-on-startup>
+		</servlet>
+		<!--映射，请求路径 与url-pattern匹配时，就进入servlet来处理-->
+		<servlet-mapping>
+			<servlet-name>dispatcherServlet</servlet-name>
+			<!--拦截所有请求，除jsp外-->
+			<!--<url-pattern>/</url-pattern>-->
+			<!--只拦截*.do结尾的请求， 请求的url就得加.do
+				不会拦截.jsp, .html,.js, .css .jpg
+				不需要配置mvc:resources, default-servlet-handler
+			-->
+			<url-pattern>*.do</url-pattern>
+		</servlet-mapping>
+</web-app>
